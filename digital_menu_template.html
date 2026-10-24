@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#12382f">
+<title>Our Menu | Digital Restaurant Menu</title>
+<style>
+:root{--green:#12382f;--gold:#d5a83f;--cream:#fbf7ee;--ink:#202522;--muted:#69716b;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Sinhala",Arial,sans-serif}
+header{background:linear-gradient(135deg,#0c2923,#1c4a3e);color:#fff;padding:24px 18px 30px;text-align:center}
+.top{display:flex;justify-content:flex-end;max-width:980px;margin:0 auto 12px}
+button,.lang{cursor:pointer;border:0;border-radius:999px;padding:10px 15px;font-weight:700}
+.lang{background:#fff;color:var(--green)}.brand{font-size:13px;letter-spacing:3px;color:#f0ce76;text-transform:uppercase}
+h1{font-family:Georgia,serif;font-size:clamp(34px,7vw,54px);margin:8px 0}
+.subtitle{margin:0;color:#e9eee9}.note{font-size:12px;color:#f6df9e;margin-top:12px}
+main{max-width:980px;margin:auto;padding:22px 15px 55px}
+.intro{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.intro h2{margin:0 0 5px;font-size:23px}.intro p{margin:0;color:var(--muted);font-size:14px}
+.categories{display:flex;gap:8px;overflow:auto;padding:18px 0 20px}
+.categories button{background:#fff;color:var(--green);border:1px solid #e6e0d3;white-space:nowrap}
+.categories button.active{background:var(--green);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:16px}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 4px 18px #17251b0d;border:1px solid #eee8dc}
+.card img{display:block;width:100%;height:170px;object-fit:cover;background:#e8e1d4}
+.cardbody{padding:14px}.itemtop{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.itemname{font-size:17px;font-weight:800;margin:0}.sinhala{font-size:14px;color:var(--muted);margin:4px 0 10px}
+.price{font-weight:800;color:#946d13;white-space:nowrap}.desc{font-size:13px;color:var(--muted);margin:0}
+footer{text-align:center;padding:22px;color:#dce7df;background:var(--green);font-size:13px}
+.hidden{display:none!important}
+@media(max-width:480px){.card img{height:155px}.intro h2{font-size:21px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><button class="lang" id="langBtn" aria-label="Change language">සිංහල</button></div>
+  <div class="brand" id="brand">Your Restaurant Name</div>
+  <h1 id="heroTitle">Our Menu</h1>
+  <p class="subtitle" id="heroSub">Fresh food · Great taste</p>
+  <div class="note" id="heroNote">Sample menu — replace names, photos and prices before publishing</div>
+</header>
+<main>
+  <div class="intro">
+    <div><h2 id="sectionTitle">Explore our menu</h2><p id="sectionSub">Choose a category and find your favourite.</p></div>
+  </div>
+  <nav class="categories" id="categories" aria-label="Menu categories"></nav>
+  <section class="grid" id="menuGrid"></section>
+</main>
+<footer><span id="footerText">Thank you for visiting · We look forward to serving you!</span><br><span>Good Food · Great Mood</span></footer>
+<script>
+const menu = [
+ {cat:"rice",en:"Chicken Rice & Curry",si:"චිකන් රයිස් ඇන්ඩ් කරි",price:850,desc:"Rice served with chicken curry and side dishes.",img:"https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=900&q=80"},
+ {cat:"rice",en:"Vegetable Rice & Curry",si:"එළවළු බත් සහ ව්‍යංජන",price:650,desc:"A comforting rice plate with vegetable curries.",img:"https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=900&q=80"},
+ {cat:"short",en:"Chicken Kottu",si:"චිකන් කොත්තු",price:950,desc:"Chopped roti tossed with chicken, vegetables and spices.",img:"https://images.unsplash.com/photo-1567337710282-00832b415979?auto=format&fit=crop&w=900&q=80"},
+ {cat:"short",en:"Vegetable Roti",si:"එළවළු රොටි",price:250,desc:"A savoury Sri Lankan snack.",img:"https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=80"},
+ {cat:"drinks",en:"Fresh Orange Juice",si:"නැවුම් දොඩම් ජූස්",price:450,desc:"Fresh, chilled orange juice.",img:"https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=900&q=80"},
+ {cat:"drinks",en:"Iced Coffee",si:"අයිස් කෝපි",price:500,desc:"Chilled coffee served over ice.",img:"https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=900&q=80"}
+];
+let sinhala=false, active="all";
+const labels = {
+ all:["All","සියල්ල"], rice:["Rice & Curry","බත් සහ ව්‍යංජන"], short:["Short Eats","කෙටි කෑම"], drinks:["Drinks","පාන වර්ග"]
+};
+function render(){
+ document.documentElement.lang=sinhala?"si":"en";
+ document.getElementById("langBtn").textContent=sinhala?"English":"සිංහල";
+ document.getElementById("brand").textContent=sinhala?"ඔබේ හෝටලයේ නම":"Your Restaurant Name";
+ document.getElementById("heroTitle").textContent=sinhala?"අපගේ ආහාර මෙනුව":"Our Menu";
+ document.getElementById("heroSub").textContent=sinhala?"නැවුම් ආහාර · විශිෂ්ට රසය":"Fresh food · Great taste";
+ document.getElementById("heroNote").textContent=sinhala?"මෙය ආදර්ශ මෙනුවකි — පළ කිරීමට පෙර නම් සහ මිල ගණන් වෙනස් කරන්න":"Sample menu — replace names, photos and prices before publishing";
+ document.getElementById("sectionTitle").textContent=sinhala?"අපගේ මෙනුව":"Explore our menu";
+ document.getElementById("sectionSub").textContent=sinhala?"වර්ගයක් තෝරා ඔබ කැමති ආහාරය බලන්න.":"Choose a category and find your favourite.";
+ document.getElementById("footerText").textContent=sinhala?"අප වෙත පැමිණීම ගැන ස්තුතියි!":"Thank you for visiting · We look forward to serving you!";
+ const cats=[["all",labels.all],["rice",labels.rice],["short",labels.short],["drinks",labels.drinks]];
+ document.getElementById("categories").innerHTML=cats.map(([key,l])=>`<button class="${active===key?'active':''}" data-cat="${key}">${l[sinhala?1:0]}</button>`).join("");
+ document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{active=b.dataset.cat;render()});
+ const items=menu.filter(x=>active==="all"||x.cat===active);
+ document.getElementById("menuGrid").innerHTML=items.map(x=>`<article class="card"><img src="${x.img}" alt="${x.en}" loading="lazy" onerror="this.style.display='none'"><div class="cardbody"><div class="itemtop"><p class="itemname">${sinhala?x.si:x.en}</p><span class="price">Rs. ${x.price}</span></div><p class="sinhala">${sinhala?x.en:x.si}</p><p class="desc">${sinhala?(x.cat==="rice"?"බත් සමඟ රසවත් ව්‍යංජන.":x.cat==="short"?"රසවත් කෙටි කෑමක්.":"සිසිල් පානයක්.") : x.desc}</p></div></article>`).join("");
+}
+document.getElementById("langBtn").onclick=()=>{sinhala=!sinhala;render()};
+render();
+</script>
+</body>
+</html>
